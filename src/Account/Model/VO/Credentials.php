@@ -17,20 +17,23 @@ class Credentials
     private $login;
     /** @var string */
     private $passwordHash;
+    /** @var string optional */
+    private $password = null;
 
     /**
      * Credentials constructor.
      * @param string $login
      * @param string $password
-     * @param bool $needHash
+     * @param bool $isHashed to mark given password as already hashed
      */
-    private function __construct(string $login, string $password, bool $needHash = true)
+    private function __construct(string $login, string $password, bool $isHashed = true)
     {
         Assert::that($login)->minLength(1);
         Assert::that($password)->minLength(6);
 
         $this->login        = $login;
-        $this->passwordHash = $needHash ? $this->hashPassword($password) : $password;
+        $this->password     = $isHashed ? null : $password;
+        $this->passwordHash = $isHashed ? $this->hashPassword($password) : $password;
     }
 
 
@@ -73,17 +76,29 @@ class Credentials
     {
         return [
             'login' => $this->login,
+            'password' => $this->password,
             'passwordHash' => $this->passwordHash,
         ];
     }
 
     static function fromArray(array $array): self
     {
-        return new self(
-            $array['login'] ?? "",
-            $array['passwordHash'] ?? "",
-            false
-        );
+        Assert::that($array)->keyExists('login');
+        Assert::that($array)->keyExists('password');
+        Assert::that($array)->keyExists('passwordHash');
+
+        if ($array['password'] ?? false) {
+            return self::fromPlainPassword(
+                $array['login'] ?? "",
+                $array['password']
+            );
+        } else {
+            return self::fromHashedPassword(
+                $array['login'] ?? "",
+                $array['passwordHash']
+            );
+        }
+
     }
 
     static function fromPlainPassword(string $login, string $password): self
