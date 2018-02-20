@@ -16,5 +16,5 @@ interface ProfileRepository
 {
     function save(Profile $profile);
 
-    function findByCredentials(Credentials $credentials): Profile;
+    function findByCredentials(Credentials $credentials): ?Profile;
 }

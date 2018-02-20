@@ -19,7 +19,6 @@ class CreateProfileHandlerTest extends TestCase
 {
     function test_it_persists_profile()
     {
-
         $credentials = Credentials::fromPlainPassword("login", "password");
         $passport    = new Passport("Dmitriy", "Lezhnev", "123456");
 
@@ -27,7 +26,7 @@ class CreateProfileHandlerTest extends TestCase
 
         $loggerMock = $this->prophesize(LoggerInterface::class);
         $loggerMock->info(Argument::type('string'), Argument::type('array'))->shouldBeCalled();
-        
+
         $repoMock = $this->prophesize(ProfileRepository::class);
         $repoMock->save(
             Argument::that(function (Profile $profile) use ($credentials, $passport) {
@@ -35,7 +34,6 @@ class CreateProfileHandlerTest extends TestCase
                     $profile->getCredentials()->isEqual($credentials);
             })
         )->shouldBeCalled();
-
 
         $handler = new CreateProfileHandler($loggerMock->reveal(), $repoMock->reveal());
         $handler($command);
