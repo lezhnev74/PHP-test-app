@@ -36,7 +36,6 @@ class Credentials
         $this->passwordHash = $isHashed ? $this->hashPassword($password) : $password;
     }
 
-
     /**
      * @return string
      */
@@ -58,7 +57,6 @@ class Credentials
         return $this->passwordHash;
     }
 
-
     public function isEqual(self $credentials): bool
     {
         return
@@ -70,7 +68,6 @@ class Credentials
     {
         return password_hash($password, PASSWORD_DEFAULT);
     }
-
 
     public function asArray(): array
     {
@@ -98,7 +95,6 @@ class Credentials
                 $array['passwordHash']
             );
         }
-
     }
 
     static function fromPlainPassword(string $login, string $password): self

@@ -16,7 +16,10 @@
         "filp/whoops": "^2.1",
         "monolog/monolog": "^1.23",
         "beberlei/assert": "^2.9",
-        "prooph/service-bus": "^6.2"
+        "prooph/service-bus": "^6.2",
+        "slim/csrf": "^0.8.2",
+        "klein/klein": "^2.1",
+        "league/plates": "^3.3"
     },
     "autoload": {
         "psr-4": {
