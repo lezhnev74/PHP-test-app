@@ -1,5 +1,10 @@
 # Результат тестового задания
-This is a result of implementing the demo app.
+Этот репозиторий содержит приложение, созданное по тестовому заданию.
+Тестовое задание было намерено упрощено и я мог бы решить его "как можно проще", но в реальной жизни чаще необходимо создание именно приложения, а не одной формы, да и условия тестового задания включали рекомендацию "наличие элементарной архитектуры, ООП приветствуется".
+
+Поэтому приложение использует DI контейнер, а также шину обмена сообщениями для разделения логики ввода-вывода (http) и бизнес-логики (domain logic).
+
+Также, как и в реальной жизни, весь ключевой код покрыт тестами.
 
 ## Используемые пакеты
 В задании явно указано, что нельзя использовать никакой PHP framework. Но там не сказано ничего относительно других менее грандиозных зависимостей. Например, в этом проекте используется следующие (описание скопировано из моего [репозитория](https://github.com/lezhnev74/php-foundation)):
@@ -12,6 +17,7 @@ This app uses a couple of packages I'd like to explain:
 - `filp/whoops` - The error handler and formatter library. Outputs pretty responses in JSON, HTML and console modes.
 - `monolog/monolog` - This one is to log things to files.
 - `beberlei/assert` - Пакет состоит из множества валидаторов, проверяющих формат данных
+- `prooph/service-bus` - Шина обмена сообщениями
 - `phpunit/phpunit` - для запуска автоматических тестов
 
 **Т.о. основа проекта создана из нескольких популярных и проверенных временем пакетов, связанных вместе.**
@@ -21,10 +27,14 @@ This app uses a couple of packages I'd like to explain:
 - copy `.env.example` to `.env` and adjust its contents to match your environment
 - pull in dependencies by running `composer install`
 - Запустить встроенный отладочный PHP сервер: `php -S localhost:8081 -t public`
-- Открыть в браузере адрес http://localhost:8081
+- Открыть в браузере адрес `http://localhost:8081`
 
 ## Запуск автоматических тестов
 Запустите из папки проекта `vendor/bin/phpunit`
 
 ## TODO
 Текущая кодовая база может быть улучшена во многих направлениях, но я остановился после нескольких итераций, т.к. условия задачи выглядит удовлетворенными.
+
+## Автор
+Lezhnev Dmitriy, lezhnev.work@gmail.com
+https://lessthan12ms.com
