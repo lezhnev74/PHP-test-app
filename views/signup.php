@@ -108,21 +108,7 @@
         }
 
         // Dictionary for messages
-        var error_messages = {
-            ru: {
-                email: "Формат электронной почты некорректен",
-                password: "Пароль должен иметь минимум 6 символов (без пробелов)",
-                passwordConfirmation: "Подтверждение пароля не совпадает",
-                first_name: "Пожалуйста, укажите Ваше Имя",
-                last_name: "Пожалуйста, укажите Вашу Фамилию",
-                passport: "Пожалуйста, укажите Номер Вашего Паспорта",
-                photo: "Пожалуйста, выберите фотографию. Разрешенные форматы: gif, png, jpg."
-            },
-            en: {
-                email: "Wrong email format"
-            }
-        };
-        var lang = 'ru';
+        var error_messages = <?= json_encode($error_messages, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE) ?>;
 
         $(function () {
             $("form").submit(function () {
@@ -135,7 +121,7 @@
                 var email = $("#email").val();
                 var emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
                 if (!emailRegExp.test(email)) {
-                    reportError("#email", error_messages[lang].email);
+                    reportError("#email", error_messages.email);
                     return false;
                 }
 
@@ -143,11 +129,11 @@
                 var password = $("#pwd").val();
                 var password2 = $("#pwdRe").val();
                 if (password.length < 6) {
-                    reportError("#pwd", error_messages[lang].password);
+                    reportError("#pwd", error_messages.password);
                     return false;
                 }
                 if (password2 != password) {
-                    reportError("#pwdRe", error_messages[lang].passwordConfirmation);
+                    reportError("#pwdRe", error_messages.passwordConfirmation);
                     return false;
                 }
 
@@ -156,15 +142,15 @@
                 var last_name = $("#last_name").val();
                 var passport = $("#passport").val();
                 if (!first_name.trim().length) {
-                    reportError("#first_name", error_messages[lang].first_name);
+                    reportError("#first_name", error_messages.first_name);
                     return false;
                 }
                 if (!last_name.trim().length) {
-                    reportError("#last_name", error_messages[lang].last_name);
+                    reportError("#last_name", error_messages.last_name);
                     return false;
                 }
                 if (!passport.trim().length) {
-                    reportError("#password", error_messages[lang].passport);
+                    reportError("#password", error_messages.passport);
                     return false;
                 }
 
@@ -173,7 +159,7 @@
                 var photo = $('#photo');
 
                 if (!isImage(photo.val())) {
-                    reportError("#photo", error_messages[lang].photo);
+                    reportError("#photo", error_messages.photo);
                     return false;
                 }
 

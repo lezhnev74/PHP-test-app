@@ -18,17 +18,30 @@ class Profile
     private $credentials;
     /** @var Passport */
     private $passport;
+    /** @var string */
+    private $photoRelativePath;
 
     /**
      * Profile constructor.
      * @param Credentials $credentials
      * @param Passport $passport
+     * @param string $photoRelativePath
      */
-    public function __construct(Credentials $credentials, Passport $passport)
+    public function __construct(Credentials $credentials, Passport $passport, string $photoRelativePath)
     {
-        $this->credentials = $credentials;
-        $this->passport    = $passport;
+        $this->credentials       = $credentials;
+        $this->passport          = $passport;
+        $this->photoRelativePath = $photoRelativePath;
     }
+
+    /**
+     * @return string
+     */
+    public function getPhotoRelativePath(): string
+    {
+        return $this->photoRelativePath;
+    }
+
 
     /**
      * @return Credentials

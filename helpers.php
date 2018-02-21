@@ -8,7 +8,7 @@ function base_path(string $suffix)
 
 function storage_path(string $suffix)
 {
-    return env('STORAGE_PATH', __DIR__ . "/storage") . "/" . $suffix;
+    return config('app.storage_path') . "/" . $suffix;
 }
 
 function app_deploy(): string
@@ -16,7 +16,7 @@ function app_deploy(): string
     return config('app.deploy');
 }
 
-function translate($key): string
+function translate(string $key): string
 {
     return config('translation.' . config('app.language') . "." . $key, "__no_translation__");
 }

@@ -12,6 +12,7 @@ namespace SignupForm\Account\Command\CreateProfile;
 use Psr\Log\LoggerInterface;
 use SignupForm\Account\Model\Profile;
 use SignupForm\Account\Repository\ProfileRepository;
+use SignupForm\Filesystem\FilesystemInterface;
 
 class CreateProfileHandler
 {
@@ -19,22 +20,29 @@ class CreateProfileHandler
     private $logger;
     /** @var ProfileRepository */
     private $repo;
+    /** @var FilesystemInterface */
+    private $filesystem;
 
     /**
      * CreateProfileHandler constructor.
      * @param LoggerInterface $logger
      * @param ProfileRepository $repo
+     * @param FilesystemInterface $filesystem
      */
-    public function __construct(LoggerInterface $logger, ProfileRepository $repo)
+    public function __construct(LoggerInterface $logger, ProfileRepository $repo, FilesystemInterface $filesystem)
     {
-        $this->logger = $logger;
-        $this->repo   = $repo;
+        $this->logger     = $logger;
+        $this->repo       = $repo;
+        $this->filesystem = $filesystem;
     }
 
 
     function __invoke(CreateProfile $command)
     {
-        $profile = new Profile($command->getCredentials(), $command->getPassport());
+        $relativePath = "photo/" . md5(random_bytes(32));
+        $this->filesystem->moveToPublic($relativePath, $command->getPhotoFile());
+
+        $profile = new Profile($command->getCredentials(), $command->getPassport(), $relativePath);
         $this->repo->save($profile);
 
         $this->logger->info("Profile created", [

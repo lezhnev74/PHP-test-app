@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace SignupForm\Account\Command\CreateProfile;
 
 
+use Assert\Assert;
 use Prooph\Common\Messaging\Command;
 use Prooph\Common\Messaging\PayloadConstructable;
 use Prooph\Common\Messaging\PayloadTrait;
@@ -29,11 +30,26 @@ class CreateProfile extends Command implements PayloadConstructable
         return Credentials::fromArray($this->payload['credentials']);
     }
 
-    static function fromPassportAndCredentials(Passport $passport, Credentials $credentials): self
+    function getPhotoFile(): string
     {
+        return $this->payload['photoFile'];
+    }
+
+    static function fromPassportAndCredentialsAndPhoto(
+        Passport $passport,
+        Credentials $credentials,
+        string $photoFile
+    ): self {
+
+        Assert::that($photoFile)->file();
+        $mimetype = mime_content_type($photoFile);
+        $allowed  = ['image/gif', 'image/png', 'image/jpeg'];
+        Assert::that($mimetype)->inArray($allowed);
+
         return new self([
             'credentials' => $credentials->asArray(),
             'passport' => $passport->asArray(),
+            'photoFile' => $photoFile,
         ]);
     }
 

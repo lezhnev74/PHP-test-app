@@ -13,10 +13,18 @@ return [
     },
 
     \League\Plates\Engine::class => function () {
-        return new League\Plates\Engine(base_path('/views'));
+        $engine = new League\Plates\Engine(base_path('/views'));
+        $engine->addData([
+            'error_messages' => config('translation.' . config('app.language') . ".http.form"),
+        ]);
+        return $engine;
     },
 
     \Doctrine\Common\Cache\Cache::class => function () {
         return new \Doctrine\Common\Cache\FilesystemCache(storage_path("cache/"));
+    },
+
+    \SignupForm\Filesystem\FilesystemInterface::class => function () {
+        return new SignupForm\Filesystem\Filesystem(config('app.public_path'));
     },
 ];

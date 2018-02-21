@@ -17,7 +17,7 @@ function config(string $var, $default = null)
 {
     static $config = null;
     if (!$config) {
-        $config = \Gestalt\Configuration::load(new \Gestalt\Loaders\PhpDirectoryLoader(base_path('config')));
+        $config = \Gestalt\Configuration::load(new \Gestalt\Loaders\PhpDirectoryLoader(__DIR__ . "/../config"));
     }
 
     return $config->get($var, $default);
