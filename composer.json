@@ -18,7 +18,8 @@
         "beberlei/assert": "^2.9",
         "prooph/service-bus": "^6.2",
         "klein/klein": "^2.1",
-        "league/plates": "^3.3"
+        "league/plates": "^3.3",
+        "doctrine/dbal": "^2.6"
     },
     "autoload": {
         "psr-4": {

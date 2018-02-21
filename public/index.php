@@ -87,6 +87,14 @@ $router->respond('POST', '/signup',
             $service->flash(translate('http.csrf'));
         } else {
             // All looks good, now pass data to the domain layer
+            $credentials = \SignupForm\Account\Model\VO\Credentials::fromPlainPassword($email, $password);
+            $passport    = new \SignupForm\Account\Model\VO\Passport($first_name, $last_name, $passport);
+
+            $command = \SignupForm\Account\Command\CreateProfile\CreateProfile::fromPassportAndCredentialsAndPhoto($passport,
+                $credentials, $photoFile['tmp_name']);
+            container()->get(\Prooph\ServiceBus\CommandBus::class)->dispatch($command);
+
+            return "ok";
         }
 
     });

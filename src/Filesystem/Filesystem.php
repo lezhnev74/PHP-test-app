@@ -26,15 +26,23 @@ class Filesystem implements FilesystemInterface
         $this->public_path = $public_path;
     }
 
-
     function moveToPublic(string $targetRelativePath, string $sourceFullPath): string
     {
+        // Make dir of none
+        $newFullPath = $this->public_path . DIRECTORY_SEPARATOR . $targetRelativePath;
+        $folder      = dirname($newFullPath);
+        if (!is_dir($folder)) {
+            mkdir($folder, 0777, true);
+        }
 
+        copy($sourceFullPath, $newFullPath);
+
+        return $newFullPath;
     }
 
     function removeFromPublic(string $relativePath): void
     {
-        // TODO: Implement removeFromPublic() method.
+        @unlink($this->public_path . DIRECTORY_SEPARATOR . $relativePath);
     }
 
 }

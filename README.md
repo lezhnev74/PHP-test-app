@@ -4,7 +4,9 @@
 
 Поэтому приложение использует DI контейнер, а также шину обмена сообщениями для разделения логики ввода-вывода (http) и бизнес-логики (domain logic).
 
-Также, как и в реальной жизни, весь ключевой код покрыт тестами.
+Также, как и в реальной жизни, весь ключевой код покрыт тестами. 
+
+База данных используется sqlite, с враппером dcotrine/dbal. Файл с базой автоматически создается в корне проекта.
 
 ## Архитектура
 ### Бизнес логика
@@ -35,13 +37,13 @@ This app uses a couple of packages I'd like to explain:
 - `illuminate/support` - this package needs explanation. It comes from Laravel Framework and I pulled it in because I am so used to syntactic sugar it offers - functions like `env(...)` or `array_get(...)` are so useful taht I just had to pull this one in the app. It does have some classes and interfaces that I don't use, not a big issue at all.
 - `php-di/php-di` - The dependency injection container. There are many more, this one feels okay to me.
 - `doctrine/cache` - This package is required in order to optimize previous pacakge, so it will cache internal data. The cache is in general very useful for other stuff as well.
+- `doctrine/dbal` - abstraction over database connection
 - `filp/whoops` - The error handler and formatter library. Outputs pretty responses in JSON, HTML and console modes.
 - `monolog/monolog` - This one is to log things to files.
 - `beberlei/assert` - Пакет состоит из множества валидаторов, проверяющих формат данных
 - `prooph/service-bus` - Шина обмена сообщениями
 - `klein/klein` - HTTP ввод-вывод
 - `league/plates` - шаблонизатор для HTML страниц
-- `slim/csrf` - middleware для защиты от CSRF
 - `phpunit/phpunit` - для запуска автоматических тестов
 
 **Т.о. основа проекта создана из нескольких популярных и проверенных временем пакетов, связанных вместе.**
