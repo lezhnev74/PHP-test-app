@@ -1,10 +1,10 @@
-<?php $this->layout('template', ['pageTitle' => 'Регистрация']) ?>
+<?php $this->layout('template', ['pageTitle' => translate('http.labels.signup')]) ?>
 
     <form method="post" action="/signup" enctype="multipart/form-data">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <h1 class="h3 mb-3 font-weight-normal">Регистрация на сайте</h1>
+                    <h1 class="h3 mb-3 font-weight-normal"><?= $this->e(translate('http.labels.signup')) ?></h1>
                 </div>
             </div>
 
@@ -15,18 +15,18 @@
                     <input type="hidden" name="csrf_token" value="<?= $this->e($csrf) ?>">
 
                     <div class="form-group">
-                        <label>Электронная почта</label>
-                        <input type="text" class="form-control" placeholder="Введите электронную почту" required
+                        <label><?= $this->e(translate('http.labels.email')) ?></label>
+                        <input type="text" class="form-control" required
                                id="email" name="email">
                     </div>
                     <div class="form-group">
-                        <label>Придумайте пароль</label>
-                        <input type="password" class="form-control" id="pwd" placeholder="Пароль" required
+                        <label><?= $this->e(translate('http.labels.password')) ?></label>
+                        <input type="password" class="form-control" id="pwd" required
                                minlength="6" name="password">
                     </div>
                     <div class="form-group">
-                        <label>Повторите пароль</label>
-                        <input type="password" class="form-control" id="pwdRe" placeholder="Пароль" required
+                        <label><?= $this->e(translate('http.labels.passwordConfirm')) ?></label>
+                        <input type="password" class="form-control" id="pwdRe" required
                                minlength="6" name="password2">
                     </div>
 
@@ -36,20 +36,19 @@
 
 
                     <div class="form-group">
-                        <label>Ваше Имя</label>
-                        <input type="text" class="form-control" id="first_name" placeholder="Введите Ваше Имя" required
+                        <label><?= $this->e(translate('http.labels.first_name')) ?></label>
+                        <input type="text" class="form-control" id="first_name" required
                                minlength="1" name="first_name">
                     </div>
                     <div class="form-group">
-                        <label>Ваша Фамилия</label>
-                        <input type="text" class="form-control" id="last_name" placeholder="Введите Вашу Фамилию"
+                        <label><?= $this->e(translate('http.labels.last_name')) ?></label>
+                        <input type="text" class="form-control" id="last_name"
                                required
                                minlength="1" name="last_name">
                     </div>
                     <div class="form-group">
-                        <label>Номер Вашего Паспорта</label>
+                        <label><?= $this->e(translate('http.labels.passport')) ?></label>
                         <input type="text" class="form-control" id="passport"
-                               placeholder="Введите номер Вашего Паспорта"
                                required minlength="1" name="passport">
                     </div>
 
@@ -59,7 +58,7 @@
 
 
                     <div class="form-group">
-                        <label>Ваша Фотография</label>
+                        <label><?= $this->e(translate('http.labels.photo')) ?></label>
                         <input type="file" class="form-control" id="photo" required name="photo">
                     </div>
 
@@ -71,7 +70,7 @@
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <hr>
-                    <button type="submit" class="btn btn-primary">Продолжить</button>
+                    <button type="submit" class="btn btn-primary"><?= $this->e(translate('http.labels.signup')) ?></button>
                 </div>
             </div>
         </div>
@@ -108,7 +107,7 @@
         }
 
         // Dictionary for messages
-        var error_messages = <?= json_encode($error_messages, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE) ?>;
+        var error_messages = <?= json_encode($error_messages, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?>;
 
         $(function () {
             $("form").submit(function () {

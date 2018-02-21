@@ -11,15 +11,32 @@ $router = new \Klein\Klein();
 $router->service()->startSession();
 
 // Маршруты я прописываю прямо здесь, без дополнительных конфигурационных файлов
-$router->respond('GET', '/signup',
-    function (\Klein\Request $request, \Klein\AbstractResponse $response, \Klein\ServiceProvider $service) {
-        $templates        = container()->get(\League\Plates\Engine::class);
-        $_SESSION['csrf'] = md5(random_bytes(32));
+$router->respond('GET', '/signup', function (
+    \Klein\Request $request,
+    \Klein\AbstractResponse $response,
+    \Klein\ServiceProvider $service
+) {
+    $templates        = container()->get(\League\Plates\Engine::class);
+    $_SESSION['csrf'] = md5(random_bytes(32));
 
-        return $templates
-            ->addData(['flash' => $service->flashes()])
-            ->render('signup', ['csrf' => $_SESSION['csrf']]);
-    });
+    return $templates
+        ->addData(['flash' => $service->flashes()])
+        ->render('signup', ['csrf' => $_SESSION['csrf']]);
+});
+
+$router->respond('GET', '/login', function (
+    \Klein\Request $request,
+    \Klein\AbstractResponse $response,
+    \Klein\ServiceProvider $service
+) {
+    $templates        = container()->get(\League\Plates\Engine::class);
+    $_SESSION['csrf'] = md5(random_bytes(32));
+
+    return $templates
+        ->addData(['flash' => $service->flashes()])
+        ->render('login', ['csrf' => $_SESSION['csrf']]);
+});
+
 $router->respond('POST', '/signup',
     function (\Klein\Request $request, \Klein\AbstractResponse $response, \Klein\ServiceProvider $service) {
 
@@ -85,16 +102,23 @@ $router->respond('POST', '/signup',
 
         if (count($service->flashes('error'))) {
             $service->flash(translate('http.csrf'));
+            return $response->redirect('/signup');
         } else {
             // All looks good, now pass data to the domain layer
             $credentials = \SignupForm\Account\Model\VO\Credentials::fromPlainPassword($email, $password);
             $passport    = new \SignupForm\Account\Model\VO\Passport($first_name, $last_name, $passport);
 
-            $command = \SignupForm\Account\Command\CreateProfile\CreateProfile::fromPassportAndCredentialsAndPhoto($passport,
-                $credentials, $photoFile['tmp_name']);
-            container()->get(\Prooph\ServiceBus\CommandBus::class)->dispatch($command);
+            try {
+                $command = \SignupForm\Account\Command\CreateProfile\CreateProfile::fromPassportAndCredentialsAndPhoto($passport,
+                    $credentials, $photoFile['tmp_name']);
+                container()->get(\Prooph\ServiceBus\CommandBus::class)->dispatch($command);
 
-            return "ok";
+                $service->flash(translate('http.signedup'));
+                return $response->redirect('/login');
+            } catch (Throwable $e) {
+                $service->flash($e->getMessage());
+                return $response->redirect('/login');
+            }
         }
 
     });
