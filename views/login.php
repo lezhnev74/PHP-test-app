@@ -32,9 +32,3 @@
     </div>
 </div>
 
-
-<script>
-    $(function () {
-
-    });
-</script>

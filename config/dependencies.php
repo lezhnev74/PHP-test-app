@@ -15,4 +15,8 @@ return [
     \League\Plates\Engine::class => function () {
         return new League\Plates\Engine(base_path('/views'));
     },
+
+    \Doctrine\Common\Cache\Cache::class => function () {
+        return new \Doctrine\Common\Cache\FilesystemCache(storage_path("cache/"));
+    },
 ];

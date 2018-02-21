@@ -12,22 +12,22 @@
 
                 <div class="col-xs-12 col-md-4">
 
-                    <input type="hidden" name="<?= $this->e($csrf['name']) ?>" value="<?= $this->e($csrf['value']) ?>">
+                    <input type="hidden" name="csrf_token" value="<?= $this->e($csrf) ?>">
 
                     <div class="form-group">
                         <label>Электронная почта</label>
                         <input type="text" class="form-control" placeholder="Введите электронную почту" required
-                               id="email">
+                               id="email" name="email">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Придумайте пароль</label>
+                        <label>Придумайте пароль</label>
                         <input type="password" class="form-control" id="pwd" placeholder="Пароль" required
-                               minlength="6">
+                               minlength="6" name="password">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Повторите пароль</label>
+                        <label>Повторите пароль</label>
                         <input type="password" class="form-control" id="pwdRe" placeholder="Пароль" required
-                               minlength="6">
+                               minlength="6" name="password2">
                     </div>
 
                 </div>
@@ -38,19 +38,19 @@
                     <div class="form-group">
                         <label>Ваше Имя</label>
                         <input type="text" class="form-control" id="first_name" placeholder="Введите Ваше Имя" required
-                               minlength="1">
+                               minlength="1" name="first_name">
                     </div>
                     <div class="form-group">
                         <label>Ваша Фамилия</label>
                         <input type="text" class="form-control" id="last_name" placeholder="Введите Вашу Фамилию"
                                required
-                               minlength="1">
+                               minlength="1" name="last_name">
                     </div>
                     <div class="form-group">
                         <label>Номер Вашего Паспорта</label>
                         <input type="text" class="form-control" id="passport"
                                placeholder="Введите номер Вашего Паспорта"
-                               required minlength="1">
+                               required minlength="1" name="passport">
                     </div>
 
                 </div>
@@ -60,7 +60,7 @@
 
                     <div class="form-group">
                         <label>Ваша Фотография</label>
-                        <input type="file" class="form-control" id="photo" required>
+                        <input type="file" class="form-control" id="photo" required name="photo">
                     </div>
 
                 </div>

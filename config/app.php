@@ -4,4 +4,5 @@
 return [
     'deploy' => env('DEPLOY', 'local'),
     'debug' => env('DEBUG', true),
+    'language' => env('LANGUAGE', 'ru'),
 ];

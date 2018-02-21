@@ -15,6 +15,9 @@
             <img class="mb-4" src="/img/lezhnev.png" alt="" width="72" height="72">
         </div>
     </div>
+
+    <!-- flashes -->
+    <?php $this->insert('flashes') ?>
 </div>
 
 <?= $this->section('content') ?>

@@ -15,3 +15,8 @@ function app_deploy(): string
 {
     return config('app.deploy');
 }
+
+function translate($key): string
+{
+    return config('translation.' . config('app.language') . "." . $key, "__no_translation__");
+}

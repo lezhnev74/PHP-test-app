@@ -13,7 +13,7 @@ include(__DIR__ . "/../vendor/autoload.php");
 // 1.1. ENV loader - env variables automatically loaded and object is no more required
 (new Dotenv\Dotenv(__DIR__ . "/../"))->overload();
 // 1.2. Configuration loader available as a global config function (just for convenience)
-function config(string $var, mixed $default = null)
+function config(string $var, $default = null)
 {
     static $config = null;
     if (!$config) {
