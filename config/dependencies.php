@@ -15,7 +15,7 @@ return [
     \League\Plates\Engine::class => function () {
         $engine = new League\Plates\Engine(base_path('/views'));
         $engine->addData([
-            'error_messages' => config('translation.' . config('app.language') . ".http.form"),
+            'error_messages' => config('translation.' . language() . ".http.form"),
         ]);
         return $engine;
     },

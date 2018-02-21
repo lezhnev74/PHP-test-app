@@ -31,6 +31,7 @@
                     <td><?= $this->e($profile->getPassport()->getNumber()) ?></td>
                 </tr>
             </table>
+            <a href="/logout"><?= $this->e(translate('http.labels.logout')) ?></a>
         </div>
     </div>
 </div>

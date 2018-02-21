@@ -10,6 +10,28 @@ $router = new \Klein\Klein();
 $router->service()->startSession();
 
 // Маршруты я прописываю прямо здесь, без дополнительных конфигурационных файлов
+$router->respond('GET', '/lang/[ru|en:lang]', function (
+    \Klein\Request $request,
+    \Klein\AbstractResponse $response,
+    \Klein\ServiceProvider $service
+) {
+    $lang      = $request->param('lang');
+    $supported = config('translation.supported');
+    if (in_array($lang, array_keys($supported))) {
+        $_SESSION['language'] = $lang;
+        $service->flash(translate('http.labels.language') . ": " . $supported[$lang]);
+    }
+    return $response->redirect("/login");
+});
+
+$router->respond('GET', '/logout', function (
+    \Klein\Request $request,
+    \Klein\AbstractResponse $response,
+    \Klein\ServiceProvider $service
+) {
+    unset($_SESSION['logged_in_profile_login']);
+    return $response->redirect("/login");
+});
 $router->respond('GET', '/profile', function (
     \Klein\Request $request,
     \Klein\AbstractResponse $response,
@@ -117,7 +139,7 @@ $router->respond('POST', '/login',
             container()
                 ->get(\Prooph\ServiceBus\QueryBus::class)
                 ->dispatch($query)
-                ->done(function (\SignupForm\Account\Model\Profile $result) use (&$profile) {
+                ->done(function ($result) use (&$profile) {
                     $profile = $result;
                 }, function (\Prooph\ServiceBus\Exception\MessageDispatchException $e) {
                     throw $e;
