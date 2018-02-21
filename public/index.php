@@ -11,11 +11,11 @@ $klein = new \Klein\Klein();
 
 
 // Маршруты я прописываю прямо здесь, без дополнительных конфигурационных файлов
-$klein->respond('GET', '/login', function () {
+$klein->respond('GET', '/signup', function () {
     $csrf      = container()->get(Slim\Csrf\Guard::class);
     $templates = container()->get(\League\Plates\Engine::class);
 
-    return $templates->render('login', [
+    return $templates->render('signup', [
         'csrf' => [
             'name' => $csrf->getTokenNameKey(),
             'value' => $csrf->getTokenValueKey(),
