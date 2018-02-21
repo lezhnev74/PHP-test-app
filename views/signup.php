@@ -71,6 +71,8 @@
                 <div class="col-xs-12 col-md-12">
                     <hr>
                     <button type="submit" class="btn btn-primary"><?= $this->e(translate('http.labels.signup')) ?></button>
+                    <hr>
+                    <a href="/login"><?= $this->e(translate('http.labels.login')) ?></a>
                 </div>
             </div>
         </div>
@@ -78,34 +80,8 @@
 
 
 <?php $this->push('footer') ?>
+    <script src="/js/helper.js"></script>
     <script>
-        // Helper functions
-        function getExtension(filename) {
-            var parts = filename.split('.');
-            return parts[parts.length - 1];
-        }
-
-        function isImage(filename) {
-            var ext = getExtension(filename);
-            switch (ext.toLowerCase()) {
-                case 'jpg':
-                case 'gif':
-                case 'png':
-                    return true;
-            }
-            return false;
-        }
-
-        function reportError(node, message) {
-            $(node).addClass("is-invalid");
-            $(node).after("<div class='invalid-feedback'>" + message + "</div>");
-        }
-
-        function flushErrors() {
-            $(".is_invalid").removeClass("is-invalid");
-            $(".invalid-feedback").detach();
-        }
-
         // Dictionary for messages
         var error_messages = <?= json_encode($error_messages, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?>;
 

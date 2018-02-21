@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace SignupForm\Account\Query\FindByCredentials;
 
 
+use React\Promise\Deferred;
 use SignupForm\Account\Repository\ProfileRepository;
 
 class FindByCredentialsHandler
@@ -26,14 +27,10 @@ class FindByCredentialsHandler
     }
 
 
-    function __invoke(FindByCredentials $query)
+    function __invoke(FindByCredentials $query, Deferred $deferred = null)
     {
         $profile = $this->repo->findByCredentials($query->getCredentials());
 
-        if (!$profile) {
-            throw new \DomainException("Profile not found");
-        }
-
-        return $profile;
+        $deferred->resolve($profile);
     }
 }

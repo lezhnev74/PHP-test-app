@@ -33,7 +33,7 @@ class Credentials
 
         $this->login        = $login;
         $this->password     = $isHashed ? null : $password;
-        $this->passwordHash = $isHashed ? $this->hashPassword($password) : $password;
+        $this->passwordHash = $isHashed ? $password : $this->hashPassword($password);
     }
 
     /**
@@ -55,6 +55,14 @@ class Credentials
     public function getPasswordHash(): string
     {
         return $this->passwordHash;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 
     public function isEqual(self $credentials): bool
@@ -99,11 +107,11 @@ class Credentials
 
     static function fromPlainPassword(string $login, string $password): self
     {
-        return new self($login, $password, true);
+        return new self($login, $password, false);
     }
 
     static function fromHashedPassword(string $login, string $password): self
     {
-        return new self($login, $password, false);
+        return new self($login, $password, true);
     }
 }

@@ -58,4 +58,17 @@ return [
 
         return $bus;
     },
+
+    \Prooph\ServiceBus\QueryBus::class => function ($container) {
+        $bus = new \Prooph\ServiceBus\QueryBus();
+
+        // set router
+        $router = new \Prooph\ServiceBus\Plugin\Router\QueryRouter();
+        $router->route(\SignupForm\Account\Query\FindByCredentials\FindByCredentials::class)
+            ->to($container->get(\SignupForm\Account\Query\FindByCredentials\FindByCredentialsHandler::class));
+
+        $router->attachToMessageBus($bus);
+
+        return $bus;
+    },
 ];

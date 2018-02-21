@@ -12,6 +12,7 @@ namespace SignupForm\Database;
 use Doctrine\DBAL\Driver\Connection;
 use SignupForm\Account\Model\Profile;
 use SignupForm\Account\Model\VO\Credentials;
+use SignupForm\Account\Model\VO\Passport;
 use SignupForm\Account\Repository\ProfileRepository;
 
 class DoctrineProfileRepo implements ProfileRepository
@@ -73,11 +74,28 @@ class DoctrineProfileRepo implements ProfileRepository
 
     function findByCredentials(Credentials $credentials): ?Profile
     {
-        $stmt = $this->connection->prepare("select * from profiles where login=? and password=?");
-        $stmt->bindValue(1, $credentials->getLogin());
-        $stmt->bindValue(2, $credentials->getPasswordHash());
-        $result = $stmt->execute();
-        var_dump($result);
+        $row = $this->connection->fetchAssoc("select * from profiles where email=?", [
+            $credentials->getLogin(),
+        ]);
+
+        if (!$row) {
+            return null;
+        } else {
+            return $this->mapRowToModels($row);
+        }
+    }
+
+    private function mapRowToModels(array $row): Profile
+    {
+        return new Profile(
+            Credentials::fromHashedPassword($row['email'], $row['password']),
+            new Passport(
+                $row['first_name'],
+                $row['last_name'],
+                $row['passport']
+            ),
+            $row['photoRelativePath']
+        );
     }
 
 }
