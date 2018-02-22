@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+
     <link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" type="text/css"/>
 </head>
 <body>
@@ -17,9 +20,9 @@
         <div class="col-xs-12 col-md-6" style="padding:20px;">
             <?= translate('http.labels.language') ?>:
             <ul>
-            <?php foreach(config('translation.supported') as $key=>$title): ?>
-                <li><a href="/lang/<?=$key?>"><?= $title ?></a></li>
-            <?php endforeach; ?>
+                <?php foreach (config('translation.supported') as $key => $title): ?>
+                    <li><a href="/lang/<?= $key ?>"><?= $title ?></a></li>
+                <?php endforeach; ?>
             </ul>
         </div>
     </div>
