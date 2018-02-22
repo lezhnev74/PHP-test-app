@@ -127,10 +127,27 @@ https://lessthan12ms.com
 
 **Т.о. основа проекта создана из нескольких популярных и проверенных временем пакетов, связанных вместе.**
 
+## База данных (sqlite)
+Используется одна таблица:
+```
+CREATE TABLE profiles (
+    id INTEGER NOT NULL, 
+    first_name VARCHAR(64) NOT NULL, 
+    last_name VARCHAR(64) NOT NULL, 
+    passport VARCHAR(64) NOT NULL, 
+    email VARCHAR(256) NOT NULL, 
+    password VARCHAR(256) NOT NULL, 
+    photoRelativePath VARCHAR(256) NOT NULL, 
+    PRIMARY KEY(id)
+)
+```
+
 ## Установка
 Для того, чтобы запустить приложение и увидеть форму входа в браузере нужно:
 - copy `.env.example` to `.env` and adjust its contents to match your environment
 - pull in dependencies by running `composer install`
+- run built-in php server: `php -S localhost:8081 -t public` 
+- open this URL in browser `http://localhost:8081/login`
 
 ## Запуск автоматических тестов
 Запустите из папки проекта `vendor/bin/phpunit`
