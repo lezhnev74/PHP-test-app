@@ -173,7 +173,7 @@ $router->respond('POST', '/signup',
         if (isset($_SESSION['logged_in_profile_login'])) {
             return $response->redirect("/profile");
         }
-        
+
         // Protect from CSRF
         if (!isset($_SESSION['csrf']) || strlen($_SESSION['csrf']) != 32 || $_SESSION['csrf'] != $request->param('csrf_token')) {
             $service->flash(translate('http.csrf'));

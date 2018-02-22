@@ -47,6 +47,7 @@ class DoctrineProfileRepo implements ProfileRepository
             $profilesTable->addColumn("email", "string", ["length" => 256]);
             $profilesTable->addColumn("password", "string", ["length" => 256]);
             $profilesTable->addColumn("photoRelativePath", "string", ["length" => 256]);
+            $profilesTable->addUniqueIndex(["email"]);
 
             $profilesTable->setPrimaryKey(["id"]);
 
