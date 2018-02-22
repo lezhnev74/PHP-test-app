@@ -69,6 +69,11 @@ $router->respond('GET', '/signup', function (
     \Klein\AbstractResponse $response,
     \Klein\ServiceProvider $service
 ) {
+    if (isset($_SESSION['logged_in_profile_login'])) {
+        return $response->redirect("/profile");
+    }
+
+
     $templates        = container()->get(\League\Plates\Engine::class);
     $_SESSION['csrf'] = md5(random_bytes(32));
 
@@ -82,6 +87,10 @@ $router->respond('GET', '/login', function (
     \Klein\AbstractResponse $response,
     \Klein\ServiceProvider $service
 ) {
+    if (isset($_SESSION['logged_in_profile_login'])) {
+        return $response->redirect("/profile");
+    }
+
     $templates        = container()->get(\League\Plates\Engine::class);
     $_SESSION['csrf'] = md5(random_bytes(32));
 
@@ -92,6 +101,9 @@ $router->respond('GET', '/login', function (
 
 $router->respond('POST', '/login',
     function (\Klein\Request $request, \Klein\AbstractResponse $response, \Klein\ServiceProvider $service) {
+        if (isset($_SESSION['logged_in_profile_login'])) {
+            return $response->redirect("/profile");
+        }
 
         // Protect from CSRF
         if (!isset($_SESSION['csrf']) || strlen($_SESSION['csrf']) != 32 || $_SESSION['csrf'] != $request->param('csrf_token')) {
@@ -158,7 +170,10 @@ $router->respond('POST', '/login',
 
 $router->respond('POST', '/signup',
     function (\Klein\Request $request, \Klein\AbstractResponse $response, \Klein\ServiceProvider $service) {
-
+        if (isset($_SESSION['logged_in_profile_login'])) {
+            return $response->redirect("/profile");
+        }
+        
         // Protect from CSRF
         if (!isset($_SESSION['csrf']) || strlen($_SESSION['csrf']) != 32 || $_SESSION['csrf'] != $request->param('csrf_token')) {
             $service->flash(translate('http.csrf'));
