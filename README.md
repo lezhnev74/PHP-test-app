@@ -55,7 +55,7 @@ Any app needs a foundation so I reused a part of my work from [here](https://git
 - copy `.env.example` to `.env` and adjust its contents to match your environment
 - pull in dependencies by running `composer install`
 - run built-in php server: `php -S localhost:8081 -t public` 
-- open this URL in browser `http://localhost:8081`
+- open this URL in browser `http://localhost:8081/login`
 ### In case you have a docker:
 
 
