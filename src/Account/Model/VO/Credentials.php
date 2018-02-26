@@ -68,7 +68,7 @@ class Credentials
     public function isEqual(self $credentials): bool
     {
         return
-            $credentials->getPasswordHash() === $this->getPasswordHash() &&
+            //$credentials->getPasswordHash() === $this->getPasswordHash() &&
             $credentials->getLogin() === $this->getLogin();
     }
 
